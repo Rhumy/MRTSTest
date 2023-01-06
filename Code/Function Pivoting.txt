@@ -1,0 +1,19 @@
+let
+    Source = (Sheet_param as table,year as text) => 
+let
+    Source = Sheet_param,
+    Header = Table.ColumnNames(Source),
+    #"Unpivoted Only Selected Columns" = Table.Unpivot(Source,{Header{2},Header{3},Header{4},Header{5},Header{6},Header{7},Header{8},Header{9},Header{10},Header{11},Header{12},Header{13}}, "Attribute", "Value"),
+    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Only Selected Columns",{{"Attribute", "Month"}}),
+	#"Split Column by Delimiter" = Table.SplitColumn(#"Renamed Columns", "Month", Splitter.SplitTextByDelimiter(" ", QuoteStyle.Csv), {"Month.1", "Month.2"}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Month.1", type text}, {"Month.2", Int64.Type}}),
+    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Changed Type", {{"Month.1", each Text.BeforeDelimiter(_, "."), type text}}),
+    #"Renamed Columns2" = Table.RenameColumns(#"Extracted Text Before Delimiter",{{"Month.1", "Month"}, {"Month.2", "Year"}}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Value", Int64.Type}, {"Code", Int64.Type}, {"Description", type text}})
+    //#"Extracted First Characters" = Table.TransformColumns(#"Renamed Columns", {{"Month", each Text.Start(_, 3), type text}})
+    //#"Renamed Columns1" = Table.RenameColumns(#"Extracted First Characters",{{"Value", "Sales"}}),
+    //#"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Code", Int64.Type}})
+in
+    #"Changed Type1"
+in
+    Source
