@@ -1,4 +1,6 @@
-= (Sheet_param as table,year as text) => 
+let
+    // The parameters will received the following format as example year 2011 (#"2011","2011")
+    Source = (Sheet_param as table,year as text) => 
 let
     Source = Sheet_param,
     Header = Table.ColumnNames(Source),
@@ -11,3 +13,5 @@ let
     #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Value", Int64.Type}, {"Code", Int64.Type}, {"Description", type text}})
 in
     #"Changed Type1"
+in
+    Source
