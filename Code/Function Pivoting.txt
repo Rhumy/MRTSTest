@@ -1,4 +1,5 @@
 let
+    // The parameters will received the following format as example year 2011 (#"2011","2011")
     Source = (Sheet_param as table,year as text) => 
 let
     Source = Sheet_param,
@@ -10,9 +11,6 @@ let
     #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Changed Type", {{"Month.1", each Text.BeforeDelimiter(_, "."), type text}}),
     #"Renamed Columns2" = Table.RenameColumns(#"Extracted Text Before Delimiter",{{"Month.1", "Month"}, {"Month.2", "Year"}}),
     #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Value", Int64.Type}, {"Code", Int64.Type}, {"Description", type text}})
-    //#"Extracted First Characters" = Table.TransformColumns(#"Renamed Columns", {{"Month", each Text.Start(_, 3), type text}})
-    //#"Renamed Columns1" = Table.RenameColumns(#"Extracted First Characters",{{"Value", "Sales"}}),
-    //#"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Code", Int64.Type}})
 in
     #"Changed Type1"
 in
