@@ -1,6 +1,6 @@
 let
     Source = #"2010_pivot",
-    // Total sales by Code, Description and Year
+    // Total sales by Code, Description and Year. Only for 2010
     #"Grouped Rows" = Table.Group(Source, {"Code", "Description", "Year"}, {{"Total Sales", each List.Sum([Value]), type nullable number}})
 in
     #"Grouped Rows"
