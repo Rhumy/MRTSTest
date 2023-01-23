@@ -1,5 +1,5 @@
 let
-    // The parameters will received the following format as example year 2011 (#"2011","2011")
+    // Los parametros serán recibidos con el siguiente formato por ejemplo para el 2011 (#"2011","2011")
     Source = (Sheet_param as table,year as text) => 
 let
     Source = Sheet_param,
